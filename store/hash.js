@@ -5,6 +5,10 @@ export const state = () => ({
     z: [],
   },
   result: null,
+  scoreboard: {
+    player_0: 0,
+    player_x: 0,
+  },
 })
 
 export const mutations = {
@@ -15,9 +19,11 @@ export const mutations = {
     for (const key in state.hash) {
       if (state.hash[key].every((val) => val === 'x')) {
         state.result = true
+        state.scoreboard.player_x++
       }
       if (state.hash[key].every((val) => val === '0')) {
         state.result = true
+        state.scoreboard.player_0++
       }
     }
     for (let index = 0; index < 2; index++) {
@@ -25,6 +31,11 @@ export const mutations = {
         state.hash.x[index] === state.hash.y[index] &&
         state.hash.x[index] === state.hash.z[index]
       ) {
+        if (state.hash.x[index] === 'x') {
+          state.scoreboard.player_x++
+        } else {
+          state.scoreboard.player_0++
+        }
         state.result = true
       }
     }
@@ -32,12 +43,22 @@ export const mutations = {
       state.hash.x[0] === state.hash.y[1] &&
       state.hash.x[0] === state.hash.z[2]
     ) {
+      if (state.hash.x[0] === 'x') {
+        state.scoreboard.player_x++
+      } else {
+        state.scoreboard.player_0++
+      }
       state.result = true
     }
     if (
       state.hash.x[2] === state.hash.y[1] &&
       state.hash.x[2] === state.hash.z[0]
     ) {
+      if (state.hash.x[2] === 'x') {
+        state.scoreboard.player_x++
+      } else {
+        state.scoreboard.player_0++
+      }
       state.result = true
     }
     const total =
