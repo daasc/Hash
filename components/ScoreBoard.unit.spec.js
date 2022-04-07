@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { state } from '@/store/hash.js'
