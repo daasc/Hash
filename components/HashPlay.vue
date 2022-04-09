@@ -2,26 +2,85 @@
   <div class="align-center">
     <div class="hash-play">
       <div class="line">
-        <div class="play"></div>
-        <div class="play"></div>
-        <div class="play"></div>
+        <div class="play" data-testid="play-1" @click="doPlay(0, 'x')">
+          <value-x v-if="hash.x[0] === 'x'"></value-x>
+          <value-zero v-if="hash.x[0] === '0'"></value-zero>
+        </div>
+        <div class="play" @click="doPlay(1, 'x')">
+          <value-x v-if="hash.x[1] === 'x'"></value-x>
+          <value-zero v-if="hash.x[1] === '0'"></value-zero>
+        </div>
+        <div class="play" @click="doPlay(2, 'x')">
+          <value-x v-if="hash.x[2] === 'x'"></value-x>
+          <value-zero v-if="hash.x[2] === '0'"></value-zero>
+        </div>
       </div>
       <div class="line">
-        <div class="play"></div>
-        <div class="play"></div>
-        <div class="play"></div>
+        <div class="play" @click="doPlay(0, 'y')">
+          <value-x v-if="hash.y[0] === 'x'"></value-x>
+          <value-zero v-if="hash.y[0] === '0'"></value-zero>
+        </div>
+        <div class="play" @click="doPlay(1, 'y')">
+          <value-x v-if="hash.y[1] === 'x'"></value-x>
+          <value-zero v-if="hash.y[1] === '0'"></value-zero>
+        </div>
+        <div class="play" @click="doPlay(2, 'y')">
+          <value-x v-if="hash.y[2] === 'x'"></value-x>
+          <value-zero v-if="hash.y[2] === '0'"></value-zero>
+        </div>
       </div>
       <div class="line">
-        <div class="play"></div>
-        <div class="play"></div>
-        <div class="play"></div>
+        <div class="play" @click="doPlay(0, 'z')">
+          <value-x v-if="hash.z[0] === 'x'"></value-x>
+          <value-zero v-if="hash.z[0] === '0'"></value-zero>
+        </div>
+        <div class="play" @click="doPlay(1, 'z')">
+          <value-x v-if="hash.z[1] === 'x'"></value-x>
+          <value-zero v-if="hash.z[1] === '0'"></value-zero>
+        </div>
+        <div class="play" @click="doPlay(2, 'z')">
+          <value-x v-if="hash.z[2] === 'x'"></value-x>
+          <value-zero v-if="hash.z[2] === '0'"></value-zero>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import ValueZero from '@/components/ValueZero.vue'
+import ValueX from '@/components/ValueX.vue'
 export default {
   name: 'HashPlay',
+  components: { ValueX, ValueZero },
+  data() {
+    return {
+      cont: 0,
+    }
+  },
+  computed: {
+    hash() {
+      if (this.cont) {
+        console.log(this.$store.state.hash.hash.x[0])
+      } else {
+        console.log(this.$store.state.hash.result)
+      }
+      return this.$store.state.hash.hash
+    },
+    result() {
+      return this.$store.state.hash.result
+    },
+  },
+  methods: {
+    doPlay(index, move) {
+      if (this.cont % 2 === 0) {
+        this.$store.commit('hash/PLAY', { move, index, value: 'x' })
+      } else {
+        this.$store.commit('hash/PLAY', { move, index, value: '0' })
+      }
+      this.$store.commit('hash/CHECK_PLAY')
+      this.cont++
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -38,7 +97,8 @@ export default {
         .play {
           width: 33%;
           cursor: pointer;
-          background: cadetblue;
+
+          background: #17bdac;
           &:first-child,
           &:nth-child(2) {
             border-right: 6px solid;
@@ -46,6 +106,9 @@ export default {
           }
           border-bottom: 6px solid;
           border-bottom-color: #0ca192;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
         &:last-child {
           .play {
