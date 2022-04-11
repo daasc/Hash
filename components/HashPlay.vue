@@ -44,14 +44,16 @@
         </div>
       </div>
     </div>
+    <play-again v-if="result === false || result === true"></play-again>
   </div>
 </template>
 <script>
+import PlayAgain from './PlayAgain.vue'
 import ValueZero from '@/components/ValueZero.vue'
 import ValueX from '@/components/ValueX.vue'
 export default {
   name: 'HashPlay',
-  components: { ValueZero, ValueX },
+  components: { ValueZero, ValueX, PlayAgain },
   data() {
     return {
       cont: 0,
