@@ -19,5 +19,6 @@ export default {
   display: flex;
   width: 40%;
   justify-content: space-between;
+  margin: 0 auto;
 }
 </style>

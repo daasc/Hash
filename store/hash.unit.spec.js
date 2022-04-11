@@ -22,9 +22,9 @@ describe('Hash', () => {
   it('should return the value hash', () => {
     const { store } = createStore()
     expect(store.state.hash).toEqual({
-      x: [],
-      y: [],
-      z: [],
+      x: [null, null, null],
+      y: [null, null, null],
+      z: [null, null, null],
     })
   })
   it('should return the value result', () => {
