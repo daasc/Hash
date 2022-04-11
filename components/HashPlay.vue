@@ -51,7 +51,7 @@ import ValueZero from '@/components/ValueZero.vue'
 import ValueX from '@/components/ValueX.vue'
 export default {
   name: 'HashPlay',
-  components: { ValueX, ValueZero },
+  components: { ValueZero, ValueX },
   data() {
     return {
       cont: 0,
@@ -72,13 +72,23 @@ export default {
   },
   methods: {
     doPlay(index, move) {
-      if (this.cont % 2 === 0) {
+      if (
+        this.cont % 2 === 0 &&
+        !this.hash[move][index] &&
+        !(this.result === false || this.result === true)
+      ) {
         this.$store.commit('hash/PLAY', { move, index, value: 'x' })
-      } else {
+        this.cont++
+        this.$store.commit('hash/CHECK_PLAY')
+      } else if (
+        this.cont % 2 !== 0 &&
+        !this.hash[move][index] &&
+        !(this.result === false || this.result === true)
+      ) {
         this.$store.commit('hash/PLAY', { move, index, value: '0' })
+        this.cont++
+        this.$store.commit('hash/CHECK_PLAY')
       }
-      this.$store.commit('hash/CHECK_PLAY')
-      this.cont++
     },
   },
 }
